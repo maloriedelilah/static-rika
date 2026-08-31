@@ -88,7 +88,7 @@ export const siteConfig = {
     // setting provider to that same <name> here -- no upstream file edited.
     // The `(string & {})` union member keeps 'mailerlite'/'emailoctopus'
     // autocompleting as before while still accepting any custom name.
-    provider: 'mailerlite' as 'mailerlite' | 'emailoctopus' | (string & {}),
+    provider: 'emailoctopus' as 'mailerlite' | 'emailoctopus' | (string & {}),
     doubleOptIn: true,        // config option — single vs double opt-in (EmailOctopus:
                                // PENDING vs SUBSCRIBED status; MailerLite has no per-call
                                // equivalent -- it's a group-level dashboard setting there)
