@@ -1,0 +1,20 @@
+/* Fix: the homepage's series-teaser cover fan (.stacked-cover, base.css)
+   renders at 400px tall instead of its intended 120px, because the images
+   sit inside <article class="card series-card">, and base.css's `.card img`
+   rule (specificity 0,1,1 -- one class + one element) beats the plain
+   `.stacked-cover` class selector (specificity 0,1,0) regardless of source
+   order. At full height, the three overlapping covers overflow their flex
+   sibling (.series-card-body) so badly that the description text collapses
+   to a one-word-per-line column next to them.
+
+   base.css already carries the fix for the identical bug on the series
+   listing's book-thumb (see its own comment above `.book-thumb-list
+   .book-thumb`): scope the selector with an extra class so it reaches
+   specificity 0,2,0, which beats `.card img`'s 0,1,1. Same technique here,
+   applied as a free-form override instead of editing the upstream file
+   directly (see src/overrides/README.md / THEMING.md Tier 2B) -- base.css
+   is upstream-owned, so this stays conflict-free on the next
+   `git pull upstream main` and travels with content, not engine code. */
+.series-covers-stack .stacked-cover {
+  max-height: 120px;
+}

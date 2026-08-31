@@ -27,7 +27,7 @@
 # only src/pages/api/*.ts opting into on-demand rendering via
 # `export const prerender = false` — every other route stays a prerendered
 # static file at zero per-request Workers cost.
-name = "author-geo"
+name = "static-rika"
 compatibility_date = "2026-07-21"
 
 # CRITICAL: without this, every deploy WIPES the runtime variables/secrets
@@ -86,3 +86,19 @@ head_sampling_rate = 1
 
 # D1 (data layer): deliberately still NOT part of this — decided against for
 # now (see README). Adding it later is just a [[d1_databases]] block here.
+
+# Custom domain, declared here so it's the source of truth instead of a
+# dashboard click that a future `wrangler deploy` can silently drop. Without
+# this, Wrangler treats the local config as authoritative on every deploy and
+# a domain attached only via the dashboard is not guaranteed to survive the
+# next push (see the "local configuration ... differs from the remote
+# configuration" warning wrangler prints when the two disagree). Placed LAST
+# in the file deliberately -- TOML's [[array-of-tables]] syntax makes every
+# bare key after it (until the next [section]/[[array]] header) belong to
+# THIS table, so putting it anywhere earlier silently swallows whatever
+# top-level key came next (bit us once already: an earlier draft put this
+# block right before `keep_vars = true` and wrangler read that as
+# routes[0].keep_vars instead of a top-level setting).
+[[routes]]
+pattern = "rika.aeon14.com"
+custom_domain = true
